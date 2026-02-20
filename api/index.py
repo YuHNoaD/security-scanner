@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from mangum import Mangum
 
 app = FastAPI(title="Security Scanner API", version="1.0.0")
 
@@ -11,10 +10,7 @@ async def root():
 async def health_check():
     return {"status": "healthy"}
 
-# Mangum adapter for AWS Lambda/Vercel
-lambda_handler = Mangum(app)
-
-# Vercel expects a handler function
-handler = lambda_handler
+# Direct handler for Vercel
+handler = app
 
 __all__ = ["handler"]
