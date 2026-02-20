@@ -1,9 +1,20 @@
-from backend.app.main import app as api_app
+from fastapi import FastAPI
 
-# Vercel expects a handler that takes ASGI scope, receive, send
+app = FastAPI(title="Security Scanner API", version="1.0.0")
+
+@app.get("/")
+async def root():
+    return {"message": "Security Scanner API", "version": "1.0.0", "status": "running"}
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy"}
+
+@app.get("/api/test")
+async def test_endpoint():
+    return {"message": "Test endpoint working!"}
+
 from mangum import Mangum
-
-# Wrap FastAPI app for serverless deployment
-handler = Mangum(api_app)
+handler = Mangum(app)
 
 __all__ = ["handler"]
