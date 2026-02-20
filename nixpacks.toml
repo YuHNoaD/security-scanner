@@ -1,0 +1,14 @@
+[phases.build]
+cmds = ["pip install -r backend/requirements.txt"]
+
+[phases.start]
+cmd = "python -m uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT"
+
+[static]
+# No static files
+
+[[services]]
+http_port = 8000
+
+[services.env]
+PORT = "8000"
